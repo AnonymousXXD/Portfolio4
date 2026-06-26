@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Portfolio Spatial</title>
+    <style>
+        /* --- CONFIGURATION GÉNÉRALE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #020813;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* --- ÉCRAN D'ACCUEIL (HERO SECTION) --- */
+        .hero-section {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #0b1d3a 0%, #020813 100%);
+            padding: 0 20px;
+        }
+
+        /* --- ARRIÈRE-PLAN : ESPACE --- */
+        .space-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* --- LA PLANÈTE GÉANTE AVEC CRAQUELURES BLEU CLAIR --- */
+        .planet {
+            position: absolute;
+            top: -150px;
+            right: -250px;
+            width: 840px;
+            height: 840px;
+            background: linear-gradient(135deg, #87CEEB 0%, #00bfff 40%, #104e8b 70%, #051c33 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 60px rgba(135, 206, 235, 0.4), inset -50px -50px 100px rgba(0,0,0,0.9);
+            animation: rotatePlanet 50s linear infinite;
+            opacity: 0.9;
+            overflow: hidden;
+        }
+
+        /* Craquelures Bleu Très Clair Lumineux */
+        .planet::after {
+            content: '';
+            position: absolute;
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0 L50 40 L35 90 L70 140 L60 200 M160 0 L140 60 L170 120 L150 200 M50 40 L120 70 L170 60 M70 140 L150 160 M120 70 L95 110 L130 170' stroke='%23E0FFFF' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-size: cover;
+            filter: drop-shadow(0 0 8px #00bfff) drop-shadow(0 0 20px #ffffff);
+            opacity: 0.9;
+        }
+
+        @keyframes rotatePlanet {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* --- ÉTOILES FILANTES ET TRAÎNÉE DE POUSSIÈRE --- */
+        .shooting-star {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: #FFFFE0;
+            border-radius: 50%;
+            box-shadow: 0 0 30px #FFFFA0, 0 0 60px rgba(255,255,224,0.6);
+            opacity: 0;
+            transform-origin: center;
+            animation: shoot 8s linear infinite;
+            z-index: 2;
+        }
+
+        .shooting-star::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 40%;
+            width: 1800px;
+            height: 8px;
+            transform: translateY(-50%);
+            background: linear-gradient(to right, rgba(255, 255, 224, 0) 0%, rgba(255, 255, 160, 0.4) 50%, rgba(255, 255, 224, 1) 100%);
+            box-shadow: 0 0 20px rgba(255, 255, 224, 0.5);
+            border-radius: 50px;
+        }
+
+        .star1 { top: 10%; left: 90%; animation-delay: 0s; }
+        .star2 { top: 20%; left: 110%; animation-delay: 3.5s; animation-duration: 9s; }
+        .star3 { top: -10%; left: 60%; animation-delay: 6s; animation-duration: 7s; }
+
+        @keyframes shoot {
+            0% { transform: rotate(135deg) translateX(0); opacity: 0; }
+            5% { opacity: 1; }
+            40% { transform: rotate(135deg) translateX(2500px); opacity: 0; }
+            100% { transform: rotate(135deg) translateX(2500px); opacity: 0; }
+        }
+
+        /* --- ÉTOILES FIXES SCINTILLANTES --- */
+        .star-ambient {
+            position: absolute;
+            background-color: #FFFFE0;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { 
+                opacity: 0.9; 
+                transform: scale(1); 
+                box-shadow: 0 0 15px rgba(255, 255, 224, 1), 0 0 30px rgba(255, 255, 160, 0.8); 
+            }
+            50% { 
+                opacity: 0.3; 
+                transform: scale(0.7); 
+                box-shadow: 0 0 5px rgba(255, 255, 224, 0.4); 
+            }
+        }
+
+        /* --- LE CADRE DE L'INTRODUCTION --- */
+        .portfolio-frame {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 650px;
+            height: 320px;
+            border: 2px solid #87CEEB;
+            border-radius: 15px;
+            background: rgba(11, 29, 58, 0.5);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 35px rgba(135, 206, 235, 0.25);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .main-word {
+            font-size: 4rem;
+            color: #87CEEB;
+            font-weight: 800;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px rgba(135, 206, 235, 0.8);
+            position: absolute;
+            animation: centerToTop 4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        .sub-phrase {
+            font-size: 1.3rem;
+            color: #ffffff;
+            text-align: center;
+            max-width: 85%;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInSub 4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes centerToTop {
+            0% { transform: translateY(0); opacity: 0; }
+            20% { transform: translateY(0); opacity: 1; }
+            60% { transform: translateY(-65px); }
+            100% { transform: translateY(-65px); opacity: 1; }
+        }
+
+        @keyframes fadeInSub {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(45px); }
+        }
+
+        /* Indicateur de défilement */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            color: #87CEEB;
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* --- STRUCTURE RESPONSIVE DU CONTENU --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        section {
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(135, 206, 235, 0.1);
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            color: #87CEEB;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px rgba(135, 206, 235, 0.3);
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: #87CEEB;
+        }
+
+        /* --- LE CADRE "À PROPOS DE MOI" --- */
+        .about-card {
+            background: rgba(11, 29, 58, 0.4);
+            border: 2px solid rgba(135, 206, 235, 0.3);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(135, 206, 235, 0.1);
+            backdrop-filter: blur(8px);
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ccd6f6;
+        }
+
+        .about-text strong {
+            color: #87CEEB;
+        }
+
+        /* Grille des Projets Responsive */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .project-card {
+            background: rgba(11, 29, 58, 0.3);
+            border: 1px solid rgba(135, 206, 235, 0.2);
+            border-radius: 10px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: #87CEEB;
+            box-shadow: 0 5px 20px rgba(135, 206, 235, 0.15);
+        }
+
+        .project-card h3 {
+            color: #87CEEB;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .project-card p {
+            color: #ccd6f6;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .project-link {
+            display: inline-block;
+            color: #020813;
+            background: #87CEEB;
+            padding: 8px 18px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.2s, box-shadow 0.2s;
+            box-shadow: 0 0 10px rgba(135, 206, 235, 0.4);
+        }
+
+        .project-link:hover {
+            background: #ffffff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Section Contact épurée */
+        .contact-info {
+            font-size: 1.1rem;
+            color: #ccd6f6;
+        }
+
+        .contact-email {
+            color: #87CEEB;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .contact-email:hover {
+            color: #ffffff;
+            text-shadow: 0 0 10px #87CEEB;
+        }
+
+        /* --- ADAPTATION RESPONSIVE (MOBILES & TABLETTES) --- */
+        @media (max-width: 768px) {
+            .planet {
+                width: 440px;
+                height: 440px;
+                top: -80px;
+                right: -100px; /* Planète plus petite et mieux placée sur mobile */
+            }
+
+            .main-word {
+                font-size: 2.6rem; /* Texte principal réduit pour pas que ça dépasse */
+                letter-spacing: 2px;
+            }
+
+            .sub-phrase {
+                font-size: 1.05rem;
+            }
+
+            .portfolio-frame {
+                height: 260px;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .about-card {
+                padding: 20px;
+            }
+
+            .about-text {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero-section">
+        <div class="space-background">
+            <div class="planet"></div>
+            
+            <div class="shooting-star star1"></div>
+            <div class="shooting-star star2"></div>
+            <div class="shooting-star star3"></div>
+            
+            <div class="star-ambient" style="top: 25%; left: 12%; width: 10px; height: 10px; animation-delay: 0.5s;"></div>
+            <div class="star-ambient" style="top: 75%; left: 35%; width: 14px; height: 14px; animation-delay: 1.2s;"></div>
+            <div class="star-ambient" style="top: 85%; left: 15%; width: 8px; height: 8px; animation-delay: 0.2s;"></div>
+            <div class="star-ambient" style="top: 55%; left: 65%; width: 12px; height: 12px; animation-delay: 2s;"></div>
+            <div class="star-ambient" style="top: 15%; left: 55%; width: 9px; height: 9px; animation-delay: 1.8s;"></div>
+        </div>
+
+        <div class="portfolio-frame">
+            <h1 class="main-word">PORTFOLIO</h1> 
+            <p class="sub-phrase">Découvrez mon univers, mes créations interactives et mes projets.</p>
+        </div>
+
+        <a href="#content" class="scroll-indicator">DÉCOUVRIR ↓</a>
+    </div>
+
+    <div id="content" class="container">
+        
+        <section id="about">
+            <h2>À Propos de moi</h2>
+            <div class="about-card">
+                <p class="about-text">
+                    Actuellement <strong>étudiant lycéen</strong> et passionné par le monde du numérique, j'adore explorer de nouvelles manières de créer des projets en ligne. Pour concevoir ce portfolio et développer mes applications, <strong>j'apprends à utiliser l'Intelligence Artificielle comme un outil d'accompagnement</strong>. Cette méthode de travail moderne me permet non seulement de propulser mes idées créatives, mais aussi de **comprendre la logique de programmation et d'apprendre pas à pas les bases du code** !
+                </p>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Mes Projets</h2>
+            <div class="projects-grid">
+                
+                <div class="project-card">
+                    <h3>🎮 Jeu Vidéo</h3>
+                    <p>Un projet de jeu interactif développé entièrement en ligne. Venez tester les mécaniques de gameplay et battre le meilleur score !</p>
+                    <a href="jeu-video/index.html" class="project-link">Lancer le jeu</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>✨ Image Animée 2D</h3>
+                    <p>Création d'une scène animée en deux dimensions utilisant des effets CSS modernes pour donner vie aux illustrations.</p>
+                    <a href="animation-2d/index.html" class="project-link">Voir l'animation</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>📁 Projet Web</h3>
+                    <p>Description de ton troisième projet réalisé pendant tes cours ou ton temps libre (À personnaliser).</p>
+                    <a href="#" class="project-link">Visiter</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>📁 Application</h3>
+                    <p>Description de ton quatrième projet. Ajoute ici les détails de ce que tu as accompli.</p>
+                    <a href="#" class="project-link">Visiter</a>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Contact</h2>
+            <div class="contact-info">
+                <p>📧 <strong>Email :</strong> <a href="mailto:docbenmessaoud361@gmail.com" class="contact-email">docbenmessaoud361@gmail.com</a></p>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>
